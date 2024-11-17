@@ -44,6 +44,7 @@ __vex char *strcasestr(const char *haystack, const char *needle) {
   if (haystack == needle || !*needle)
     return (char *)haystack;
   c = *needle;
+  c = kToUpper[c & 255];
   n1 = (xmm_t){c, c, c, c, c, c, c, c, c, c, c, c, c, c, c, c};
   c = kToLower[c & 255];
   n2 = (xmm_t){c, c, c, c, c, c, c, c, c, c, c, c, c, c, c, c};
