@@ -82,6 +82,21 @@ TEST(strcasestr, test_endOfString) {
   free(haystack);
 }
 
+TEST(strcasestr, test_mixOfLowersAndUppers) {
+  MAKESTRING(haystack, "AAaabBcCDdWiN");
+  ASSERT_STREQ(&haystack[0], strcasestr(haystack, gc(strdup("aaaabbccdd"))));
+  ASSERT_STREQ(&haystack[2], strcasestr(haystack, gc(strdup("AABBCCDD"))));
+  ASSERT_STREQ(&haystack[3], strcasestr(haystack, gc(strdup("aBB"))));
+  ASSERT_STREQ(&haystack[10], strcasestr(haystack, gc(strdup("win"))));
+  ASSERT_STREQ(&haystack[10], strcasestr(haystack, gc(strdup("wIN"))));
+  free(haystack);
+}
+TEST(strcasestr, test_mixOfAll) {
+  MAKESTRING(haystack, "Abc1^de+W3i*N)");
+  ASSERT_STREQ(&haystack[3], strcasestr(haystack, gc(strdup("1^DE+w3i*n"))));
+  free(haystack);
+}
+
 TEST(strcasestr, test_secondXmmWord) {
   MAKESTRING(haystack, "eeeeeeeeeeeeeeeebbbbbbbbbbb123");
   ASSERT_STREQ(&haystack[27], strcasestr(haystack, gc(strdup("123"))));
